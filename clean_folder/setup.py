@@ -18,5 +18,5 @@ setup(
     license='MIT',
     packages=find_namespace_packages(),
     entry_points={'console_scripts': [
-        'sortfolder = clean_folder.main:']}
+        'sortfolder = clean_folder.main:main']}
 )
