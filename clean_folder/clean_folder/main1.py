@@ -24,7 +24,7 @@ file_images = []
 file_others = []
 
 
-def main(path):
+def main1(path):
     folder_list = path_folder(path)
     make_dirs(folder_list)
     sorted_folder(path, folder_list)
@@ -162,7 +162,7 @@ def start():
         print("Have not argument")
 
     if path:
-        main(path)
+        main1(path)
 
 
 if __name__ == '__main__':

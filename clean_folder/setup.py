@@ -10,9 +10,6 @@ setup(
     author_email='4020405@gmail.com',
     license='MIT',
     packages=find_namespace_packages(),
-    data_files=[('clean_folder', ['main.py', 'normalize.py',
-                 'subfunctions.py', 'start.py'])],
-    include_package_data=True,
         entry_points={'console_scripts': [
-            'clean-folder = clean_folder.main:start']}
+            'clean-folder = clean_folder.main1:start']}
 )
