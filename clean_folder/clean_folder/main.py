@@ -25,7 +25,7 @@ file_images = []
 file_others = []
 
 
-def main():
+def start():
     path = None
 
     try:
@@ -35,21 +35,25 @@ def main():
         print("Have not argument")
 
     if path:
+        main(path)
 
-        folder_list = path_folder(path)
 
-        make_dirs(folder_list)
+if __name__ == '__main__':
+    start()
 
-        sorted_folder(path, folder_list)
-
-        print('archives: ', *file_archivs, 'video: ', *file_video,
-              'audio: ', *file_audio, 'documents: ', *file_documents,
-              'images: ', *file_images, 'others: ', *file_others, sep='\n')
-        print('Відомі розширення файлів:', name_suffics_is)
-        print('Невідомі розширення файлів:', name_suffics_not)
-
-    else:
-        print('Try again')
+    
+def main(path):
+    folder_list = path_folder(path)
+    make_dirs(folder_list)
+    sorted_folder(path, folder_list)
+    print('archives: ', *file_archivs, 'video: ', *file_video,
+          'audio: ', *file_audio, 'documents: ', *file_documents,
+          'images: ', *file_images, 'others: ', *file_others, sep='\n'
+          )
+    print('Відомі розширення файлів:', *name_suffics_is)
+    print('Невідомі розширення файлів:', *name_suffics_not)
+    print()
+    print('FINISH SORTED')
 
 
 def sorted_file(file, folder_list):   # сортує файли за розширенням та номалізує ім'я
@@ -105,7 +109,3 @@ def sorted_folder(path, folder_list):  # """ розсортовує вміст �
             del_dir(i)
         if i.is_file():
             sorted_file(i, folder_list)
-
-
-if __name__ == '__main__':
-    main()

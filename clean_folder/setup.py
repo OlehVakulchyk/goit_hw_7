@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name='clean_folder',
-    version='0.2.0',
+    version='1.0.0',
     description='sorted folder',
     url='https://github.com/OlehVakulchyk/goit_hw_7',
     author='Oleh Vakulchyk',
@@ -11,5 +11,5 @@ setup(
     license='MIT',
     packages=find_namespace_packages(),
     entry_points={'console_scripts': [
-        'clean-folder = clean_folder.main:main']}
+        'clean-folder = clean_folder.main:start']}
 )
