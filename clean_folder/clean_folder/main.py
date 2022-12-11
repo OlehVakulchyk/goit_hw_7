@@ -1,10 +1,9 @@
+import re
+import shutil
 import sys
 import os
 
 from pathlib import Path
-
-from normalize import normalize
-from subfunctions import path_folder, move_os, make_dirs, unpuck, del_dir
 
 
 file_extension = {'archives': ['zip', 'gz', 'tar'],
@@ -25,23 +24,6 @@ file_images = []
 file_others = []
 
 
-def start():
-    path = None
-
-    try:
-        path = sys.argv[1]
-        print(path)
-    except:
-        print("Have not argument")
-
-    if path:
-        main(path)
-
-
-if __name__ == '__main__':
-    start()
-
-    
 def main(path):
     folder_list = path_folder(path)
     make_dirs(folder_list)
@@ -50,6 +32,7 @@ def main(path):
           'audio: ', *file_audio, 'documents: ', *file_documents,
           'images: ', *file_images, 'others: ', *file_others, sep='\n'
           )
+    print()
     print('Відомі розширення файлів:', *name_suffics_is)
     print('Невідомі розширення файлів:', *name_suffics_not)
     print()
@@ -109,3 +92,78 @@ def sorted_folder(path, folder_list):  # """ розсортовує вміст �
             del_dir(i)
         if i.is_file():
             sorted_file(i, folder_list)
+
+
+def path_folder(path):   # визначити шляхи до директорій
+    folder_list = [os.path.join(path, 'archives'),
+                   os.path.join(path, 'video'),
+                   os.path.join(path, 'audio'),
+                   os.path.join(path, 'documents'),
+                   os.path.join(path, 'images'),
+                   os.path.join(path, 'others')
+                   ]
+    return folder_list
+
+
+def make_dirs(folder_list):  # створити директорії за шляхами з folder_list
+
+    if not os.path.exists(folder_list[0]):
+        os.mkdir(folder_list[0])
+    if not os.path.exists(folder_list[1]):
+        os.mkdir(folder_list[1])
+    if not os.path.exists(folder_list[2]):
+        os.mkdir(folder_list[2])
+    if not os.path.exists(folder_list[3]):
+        os.mkdir(folder_list[3])
+    if not os.path.exists(folder_list[4]):
+        os.mkdir(folder_list[4])
+    if not os.path.exists(folder_list[5]):
+        os.mkdir(folder_list[5])
+
+
+def move_os(old_file, new_file):   # перенесення файлу
+    os.replace(old_file, new_file)
+
+
+def unpuck(file, extract_dir):  # розпаковка файла file в директорію extract_dir
+    shutil.unpack_archive(file, extract_dir)
+
+
+def del_dir(path):  # видалити директорію
+    os.rmdir(path)
+
+
+CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
+TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
+               "f", "h", "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ya", "je", "i", "ji", "g")
+
+TRANS = {}
+for c, l in zip(CYRILLIC_SYMBOLS, TRANSLATION):
+    TRANS[ord(c)] = l
+    TRANS[ord(c.upper())] = l.upper()
+
+
+def translate(name):
+    return (name.translate(TRANS))
+
+
+def normalize(name):
+
+    return re.sub(r'\W', '_', translate(name))
+
+
+def start():
+    path = None
+
+    try:
+        path = sys.argv[1]
+        print(path)
+    except:
+        print("Have not argument")
+
+    if path:
+        main(path)
+
+
+if __name__ == '__main__':
+    start()
